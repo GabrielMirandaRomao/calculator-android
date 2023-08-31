@@ -3,6 +3,7 @@
 #include <android/log.h>
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_jnicalculator_MainActivity_stringFromJNI(
@@ -21,9 +22,19 @@ JNIEXPORT jint JNICALL
 Java_com_example_jnicalculator_MainActivity_calculateAdd(
         JNIEnv *env,
         jobject thiz,
-        jint number,
-        jint operador) {
-    return number + operador;
+        jstring number,
+        jstring operador) {
+
+    const char *number1 = env->GetStringUTFChars(number, nullptr);
+    const char *number2 = env->GetStringUTFChars(operador, nullptr);
+
+    std::string firstStr = number1;
+    std::string secondStr = number2;
+
+    int intNumberOne = std::stoi(firstStr);
+    int intNumberTwo = std::stoi(secondStr);
+
+    return intNumberOne + intNumberTwo;
 }
 
 extern "C"
@@ -31,9 +42,19 @@ JNIEXPORT jint JNICALL
 Java_com_example_jnicalculator_MainActivity_calculateMinus(
         JNIEnv *env,
         jobject thiz,
-        jint number,
-        jint operador) {
-    return number - operador;
+        jstring number,
+        jstring operador) {
+
+    const char *number1 = env->GetStringUTFChars(number, nullptr);
+    const char *number2 = env->GetStringUTFChars(operador, nullptr);
+
+    std::string firstStr = number1;
+    std::string secondStr = number2;
+
+    int intNumberOne = std::stoi(firstStr);
+    int intNumberTwo = std::stoi(secondStr);
+
+    return intNumberOne - intNumberTwo;
 }
 
 extern "C"
@@ -41,9 +62,19 @@ JNIEXPORT jint JNICALL
 Java_com_example_jnicalculator_MainActivity_calculateTimes(
         JNIEnv *env,
         jobject thiz,
-        jint number,
-        jint operador) {
-    return number * operador;
+        jstring number,
+        jstring operador) {
+
+    const char *number1 = env->GetStringUTFChars(number, nullptr);
+    const char *number2 = env->GetStringUTFChars(operador, nullptr);
+
+    std::string firstStr = number1;
+    std::string secondStr = number2;
+
+    int intNumberOne = std::stoi(firstStr);
+    int intNumberTwo = std::stoi(secondStr);
+
+    return intNumberOne * intNumberTwo;
 }
 
 extern "C"
@@ -51,9 +82,19 @@ JNIEXPORT jdouble JNICALL
 Java_com_example_jnicalculator_MainActivity_calculateDivision(
         JNIEnv *env,
         jobject thiz,
-        jint number,
-        jint operador) {
-    return number / operador;
+        jstring number,
+        jstring operador) {
+
+    const char *number1 = env->GetStringUTFChars(number, nullptr);
+    const char *number2 = env->GetStringUTFChars(operador, nullptr);
+
+    std::string firstStr = number1;
+    std::string secondStr = number2;
+
+    double doubleNumberOne = std::stod(firstStr);
+    double doubleNumberTwo = std::stod(secondStr);
+
+    return doubleNumberOne / doubleNumberTwo;
 }
 
 extern "C"
@@ -61,13 +102,22 @@ JNIEXPORT jint JNICALL
 Java_com_example_jnicalculator_MainActivity_calculateExponentiation(
         JNIEnv *env,
         jobject thiz,
-        jint number,
-        jint operador) {
+        jstring number,
+        jstring operador) {
 
-    int count = number;
+    const char *number1 = env->GetStringUTFChars(number, nullptr);
+    const char *number2 = env->GetStringUTFChars(operador, nullptr);
 
-    for (int i = 1;i < operador; i++){
-        count *= number;
+    std::string firstStr = number1;
+    std::string secondStr = number2;
+
+    int intNumberOne = std::stoi(firstStr);
+    int intNumberTwo = std::stoi(secondStr);
+
+    int count = intNumberOne;
+
+    for (int i = 1;i < intNumberTwo; i++){
+        count *= intNumberOne;
     }
 
     return count;
@@ -78,9 +128,20 @@ JNIEXPORT jdouble JNICALL
 Java_com_example_jnicalculator_MainActivity_calculatePercentage(
         JNIEnv *env,
         jobject thiz,
-        jint number,
-        jint operador) {
-    return number * (operador * 1.0) / 100;
+        jstring number,
+        jstring operador) {
+
+
+    const char *number1 = env->GetStringUTFChars(number, nullptr);
+    const char *number2 = env->GetStringUTFChars(operador, nullptr);
+
+    std::string firstStr = number1;
+    std::string secondStr = number2;
+
+    double doubleNumberOne = std::stod(firstStr);
+    double doubleNumberTwo = std::stod(secondStr);
+
+    return doubleNumberOne * (doubleNumberTwo) / 100;
 }
 
 extern "C"

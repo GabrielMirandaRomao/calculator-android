@@ -3,13 +3,13 @@ package com.example.jnicalculator
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jnicalculator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var mixedArray = arrayListOf<Int>()
     private var firstNumber: String = ""
     private var secondNumber: String = ""
     private var operation: String = ""
@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             }
             mbtNumber9.setOnClickListener {
                 if (operation.isEmpty()) {
-                    firstNumber += "8"
+                    firstNumber += "9"
                     binding.tvFirstNumber.text = stringFromJNI(firstNumber)
                 } else {
                     secondNumber += "9"
@@ -140,6 +140,8 @@ class MainActivity : AppCompatActivity() {
                     binding.tvFirstNumber.visibility = View.GONE
                     binding.tvSecondNumber.visibility = View.VISIBLE
                     operation = Constants.ADD
+                } else {
+                    showToast()
                 }
             }
             btMinus.setOnClickListener {
@@ -147,6 +149,8 @@ class MainActivity : AppCompatActivity() {
                     binding.tvFirstNumber.visibility = View.GONE
                     binding.tvSecondNumber.visibility = View.VISIBLE
                     operation = Constants.MINUS
+                }else {
+                    showToast()
                 }
             }
             btTimes.setOnClickListener {
@@ -154,6 +158,8 @@ class MainActivity : AppCompatActivity() {
                     binding.tvFirstNumber.visibility = View.GONE
                     binding.tvSecondNumber.visibility = View.VISIBLE
                     operation = Constants.TIMES
+                }else {
+                    showToast()
                 }
             }
             btDivision.setOnClickListener {
@@ -161,6 +167,8 @@ class MainActivity : AppCompatActivity() {
                     binding.tvFirstNumber.visibility = View.GONE
                     binding.tvSecondNumber.visibility = View.VISIBLE
                     operation = Constants.DIVISION
+                }else {
+                    showToast()
                 }
             }
             btPercentage.setOnClickListener {
@@ -168,6 +176,8 @@ class MainActivity : AppCompatActivity() {
                     binding.tvFirstNumber.visibility = View.GONE
                     binding.tvSecondNumber.visibility = View.VISIBLE
                     operation = Constants.PERCENTAGE
+                }else {
+                    showToast()
                 }
             }
             btExponentiation.setOnClickListener {
@@ -175,24 +185,31 @@ class MainActivity : AppCompatActivity() {
                     binding.tvFirstNumber.visibility = View.GONE
                     binding.tvSecondNumber.visibility = View.VISIBLE
                     operation = Constants.EXPONENTIATION
+                }else {
+                    showToast()
                 }
             }
         }
     }
 
+    private fun showToast() {
+        Toast.makeText(this, "You should choose a operation!", Toast.LENGTH_LONG).show()
+        firstLogInCpp("Error!")
+    }
+
     private external fun stringFromJNI(number: String): String
 
-    private external fun calculateAdd(number: Int, operador: Int): Int
+    private external fun calculateAdd(number: String, operador: String): Int
 
-    private external fun calculateMinus(number: Int, operador: Int): Int
+    private external fun calculateMinus(number: String, operador: String): Int
 
-    private external fun calculateTimes(number: Int, operador: Int): Int
+    private external fun calculateTimes(number: String, operador: String): Int
 
-    private external fun calculateDivision(number: Int, operador: Int): Double
+    private external fun calculateDivision(number: String, operador: String): Double
 
-    private external fun calculateExponentiation(number: Int, operador: Int): Int
+    private external fun calculateExponentiation(number: String, operador: String): Int
 
-    private external fun calculatePercentage(number: Int, operador: Int): Double
+    private external fun calculatePercentage(number: String, operador: String): Double
 
     private external fun firstLogInCpp(text: String)
 
@@ -206,12 +223,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun printOperationResult(operation: String) {
-        firstLogInCpp("Fazendo log!")
-        val firstNumber = binding.tvFirstNumber.text.toString()
-        val secondNumber = binding.tvSecondNumber.text.toString()
         if (firstNumber.isNotEmpty() && secondNumber.isNotEmpty()) {
-            val number = firstNumber.toInt()
-            val operador = secondNumber.toInt()
+            val number = firstNumber
+            val operador = secondNumber
 
             when (operation) {
                 Constants.ADD -> binding.tvCalculateResult.text =
